@@ -1,0 +1,51 @@
+h1 UnEscaped
+div(code="<b> name </b>") unEscaped
+div(code!="<b> name </b>") Escaped
+hr
+input(type="text")
+|
+|
+input(type="radio" checked)
+input(type="radio" checked=true)
+input(type="radio" checked=false)
+|
+|
+a(style={color:'red' , background:'blue'})
+hr
+-
+    var classList1 = ['btn', 'btn-primary']
+    var classList2 = [ 'btn-small']
+div(class=classList1) Class List 1
+div(class=classList2) Class List 2
+div(class=classList2 class=classList1) With both Class Lists
+hr
+h2 Literal Class
+|
+|
+a.btn Click Me
+div.some-class With some-class
+.some-class This is also with some-class
+h2 id.pug
+|
+|
+a#one Example of #id
+div#two Another example of #id
+#three This is another one with #id
+|
+|
+div#with-id.and.class A div with #id and .class
+#with-id.and.class Another div with #id and .class
+h2 Special Attributes
+-
+    var myObj = {
+        src: 'path.jpg',
+        width: '100',
+        class: 'big'
+    }
+|
+|
+img.nice-image
+|
+|
+img.nice-image&attributes(myObj)
+

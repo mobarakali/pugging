@@ -1,0 +1,42 @@
+
+hr
+-
+    var ammount = 0
+
+case ammount
+    when 0
+        p It will take time to finish it.
+    when 50
+        p It may take whole month to do it.
+    when 500
+        p I'm doing it immidiately!
+    default
+        p Let's have a chat.
+hr
+h2 Unbuffered Code
+
+-
+    var languageList = [
+        'HTML',
+        'CSS',
+        'JavaScript',
+        'PHP',
+        'Python',
+    ]
+
+ul
+    for lang in languageList
+        li=lang
+h2 Buffred Code
+p= 'This is a paragraph'
+p= 'This is a <i>paragraph</i>'
+p!= 'This is a <i>paragraph</i>'
+// This is HTML comment!
+//- But This is a PUG comment
+//- 
+    This is also PUG comment which will not shown at HTML
+//
+    This is multyline HTML comment
+    This is really multiline!
+
+p   https://www.youtube.com/watch?v=qCyokdeZ6jI
