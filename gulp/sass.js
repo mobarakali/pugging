@@ -2,7 +2,7 @@
 
 import path from 'path';
 import autoprefixer from 'autoprefixer';
-import { printError, fixWindows10GulpPathIssue } from './util/util';
+import { printError, fixWindows10GulpPathIssue, printCompile } from './util/util';
 
 const sass = ({
   gulp,
@@ -10,7 +10,8 @@ const sass = ({
   args,
   config,
   taskTarget,
-  browserSync
+  browserSync,
+  baseUrl
 }) => {
   const dir = config.directory;
   const { entry } = config;
@@ -27,17 +28,27 @@ const sass = ({
     cssPath = [
       `./${dir.source}/**/*.{scss,sass}`,
       `!./${dir.source}/**/\_*.{scss,sass}`
-    ]
+    ];
   }
 
   // Compile sass
   gulp.task('sass', () => {
+    printCompile(compileMode, args);
     return gulp.src(cssPath)
       // Only deal with files that change in the pipeline
-      .pipe(plugins.plumber())
+      .pipe(plugins.plumber({
+        errorHandler: plugins.notify.onError({
+          title: 'Error converting SASS',
+          message: 'Error: <%= error.message %>'
+        })
+      }
+      ))
       // .pipe(plugins.cached())
+      .pipe(plugins.sassVariables({
+        $baseUrl: baseUrl
+      }))
       .pipe(plugins.sourcemaps.init())
-      .pipe(plugins.sass({
+      .pipe(plugins.dartSass({
         outputStyle: args.production ? 'compressed' : 'expanded',
         precision: 10,
         sync: true,
@@ -46,7 +57,11 @@ const sass = ({
           path.join(dir.source, dir.component)
         ]
       }))
-      .on('error', function(error) {
+      // .pipe(plugins.notify({
+      //   title: 'Pug Starter - CodeTap',
+      //   message: 'Converting (sass|scss) into beautiful CSS'
+      // }))
+      .on('error', function (error) {
         plugins.sass.logError;
         browserSync.notify(printError(error), 25000);
         console.log(error);
@@ -54,27 +69,20 @@ const sass = ({
       })
       .pipe(plugins.postcss([
         autoprefixer({
-          browsers: [
-            'last 2 version',
-            '> 5%',
-            'safari 5',
-            'ios 6',
-            'android 4'
-          ],
           // turn off notification for IE grid support
-          grid: false
+          grid: false,
         })
       ]))
 
       // Fix for Windows 10 and gulp acting crazy
       .pipe(plugins.rename(file => {
         const dest = taskTarget;
-        fixWindows10GulpPathIssue({file, dest, plugins, config})
+        fixWindows10GulpPathIssue({ file, dest, plugins, config })
       }))
 
       .pipe(plugins.sourcemaps.write('./'))
       .pipe(gulp.dest(taskTarget.replace(/\_/, '')))
-      .pipe(browserSync.stream({match: '**/*.css'}));
+      .pipe(browserSync.stream({ match: '**/*.css' }));
   });
 };
 

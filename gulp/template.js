@@ -13,6 +13,7 @@ const template = ({
   config,
   plugins,
   args,
+  baseUrl,
   browserSync
 }) => {
   const dir = config.directory;
@@ -67,7 +68,8 @@ const template = ({
             data,
             template: templateData[value],
             taskTarget,
-            embedPath
+            embedPath,
+            baseUrl
           }
         }))
         .on('error', error => {

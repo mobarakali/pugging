@@ -1,6 +1,8 @@
-![](https://github.com/marianzburlea/pug-starter/blob/995a63f1f10c3ec7112941e6c77a95330557ef16/gulp/arrow-flashing.gif) ![](https://github.com/marianzburlea/pug-starter/blob/995a63f1f10c3ec7112941e6c77a95330557ef16/gulp/arrow-flashing.gif) ![](https://github.com/marianzburlea/pug-starter/blob/995a63f1f10c3ec7112941e6c77a95330557ef16/gulp/arrow-flashing.gif)
+[![Greenkeeper badge](https://badges.greenkeeper.io/marianzburlea/pug-starter.svg)](https://greenkeeper.io/)
 
 # Pug starter
+
+If you're looking to start a career as a **Web Developer**, become hireable and access top highest paying jobs on the market, visit [WoW Job](https://wowjob.dev)
 
 ## Table of contents
 
@@ -11,14 +13,82 @@
 - [Usage](#usage)
 - [Style](#style)
 
+## Project file structure
+
+```
+.
+├── README.md
+├── package.json
+├── src
+│   ├── _asset
+│   │   ├── image
+│   │   │   └── become-a-web-developer-today.jpg
+│   │   │   └── logo.png
+│   │   └── js
+│   │       └── all.js
+│   │       └── game.js
+│   ├── _component
+│   │   ├── header
+│   │   │   ├── header.pug
+│   │   │   └── header.scss
+│   │   ├── footer
+│   │   │   ├── footer.pug
+│   │   │   └── footer.scss
+│   │   ├── smart-button
+│   │   │   ├── smart-button.pug
+│   │   │   └── smart-button.scss
+│   │   ├── project-list
+│   │   │   ├── project-list.pug
+│   │   │   └── project-list.scss
+│   │   └── layout
+│   │       ├── base.pug
+│   │       └── general.scss
+│   ├── _data
+│   │   ├── site.yml
+│   │   └── user.json
+│   │   ├── menu.yaml
+│   │   └── article.json
+│   ├── embed.scss
+│   ├── favicon.ico
+│   ├── index.pug <---------------- MAIN index
+│   ├── style.scss <---------------- MAIN style
+│   └── contact
+│       └── index.pug
+│   └── portfolio
+│       └── index.pug
+│   └── about-me
+│       └── index.pug
+│   └── my-first-project
+│       └── index.pug
+│   └── how-i-got-to-work-with-big-companies
+│       └── index.pug
+└── yarn.lock
+```
+
 ## **baseUrl**
+
+Note: `inline` attribute has been updated to `embed`
+
+Old way:
+
+```
+if config.entry.css.embed
+  link(rel="stylesheet" href=`${embedPath}` inline)
+```
+
+New way:
+
+```
+if config.entry.css.embed
+  link(rel="stylesheet" href=`${embedPath}` embed)
+```
 
 add **_modularCss_** support. When enabled in the config of `package.json` it will convert all SCSS/SASS files to its correspondent CSS path.
 
 add **_baseurl_** support which can be configured for GitHub.io and custom domain. Check _package.json_ config section for
 
 - _deployToGithubIo_ - (true|false) by default it is set to _true_ and will affect the value of _baseUrl_ when you want to deploy to GitHub.io; You want to set it to _false_ if you want to use _customUrl_ as the value of _baseUrl_
-- _customUrl_ - if you want baseUrl to have a value like http://my-project.codetap.io or any other one;
+- _customUrl_ - if you want baseUrl to have a value like http://my-project.wowjob.dev or any other one;
 - _githubUrl_ - if you want baseUrl to have a value like http://github.com/marianzburlea/pug-starter.git or any other one;
 
 In the end you can use _baseUrl_ to prefix your paths like:
@@ -44,6 +114,8 @@ img(alt="Awesome dog" width="100" href=`${baseUrl}/image/cool-dog.jpg`)
 ```
 
 ## YouTube video tutorials
+
+I want to change those tutorials to new ones using the new techniques.
 
 To help you out even more I've put together some YouTube tutorials:
 
@@ -104,6 +176,15 @@ or
 $ npm install
 ```
 
+Note: if you run into an pngquant-bin error on Windows try running:
+
+```
+npm install imagemin-pngquant@5.0.1 -D
+npm install pngquant-bin@3.1.1 -D
+```
+
+before you run `npm start`
+
 ## Usage
 
 To run the project in development mode and open a local server that synchronizes across multiple devices use:
@@ -143,3 +224,9 @@ When you're building a single page app or website, there is no point in having t
 In this scenario you can have either both **_embed_** and external or just external. The most common scenario is to have only one external style sheet file to be loaded and most of the time that's just fine.
 
 If you want to improve your SEO and user experience even further, I strongly recommend to use a combination of both **_embed_** and external. The **_embed_** style sheet should only contain the minimum amount of styles for the initial visible part of the page to render. The rest of the styles can be put in the external CSS file.
+
+## Auto reset git
+
+If you run `npm i`, the git history will get reset.
+
+To avoid resetting the git history run `npm i --ignore-scripts`
